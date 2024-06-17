@@ -167,4 +167,99 @@ def create_shipment():
 def get_shipments():
     conn = sqlite3.connect('logistics.db')
     cursor = conn.cursor()
-    cursor.exe
+    cursor.execute('SELECT * FROM shipments')  # 查询所有运输
+    shipments = cursor.fetchall()  # 获取查询结果
+    cursor.close()
+    conn.close()
+    return jsonify([dict(shipment) for shipment in shipments])  # 将结果转换为JSON格式并返回
+
+# 定义 API 端点来获取单个运输
+@app.route('/shipments/<int:id>', methods=['GET'])
+def get_shipment(id):
+    conn = sqlite3.connect('logistics.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM shipments WHERE id = ?', (id,))  # 查询指定ID的运输
+    shipment = cursor.fetchone()  # 获取查询结果
+    cursor.close()
+    conn.close()
+    return jsonify(dict(shipment))  # 将结果转换为JSON格式并返回
+
+# 定义 API 端点来更新运输
+@app.route('/shipments/<int:id>', methods=['PUT'])
+def update_shipment(id):
+    data = request.get_json()  # 从请求中获取JSON数据
+    conn = sqlite3.connect('logistics.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE shipments
+        SET shipment_number = ?, package_id = ?, carrier = ?, tracking_number = ?, estimated_delivery_date = ?
+        WHERE id = ?
+    ''', (
+        data['shipment_number'],
+        data['package_id'],
+        data['carrier'],
+        data['tracking_number'],
+        data['estimated_delivery_date'],
+        id
+    ))
+    conn.commit()  # 提交更改
+    cursor.close()
+    conn.close()
+    return jsonify({'message': '运输更新成功'})  # 返回成功信息
+
+# 定义 API 端点来删除运输
+@app.route('/shipments/<int:id>', methods=['DELETE'])
+def delete_shipment(id):
+    conn = sqlite3.connect('logistics.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM shipments WHERE id = ?', (id,))  # 删除指定ID的运输
+    conn.commit()  # 提交更改
+    cursor.close()
+    conn.close()
+    return jsonify({'message': '运输删除成功'})  # 返回成功信息
+
+# 定义 API 端点来创建追踪更新
+@app.route('/tracking_updates', methods=['POST'])
+def create_tracking_update():
+    data = request.get_json()  # 从请求中获取JSON数据
+    conn = sqlite3.connect('logistics.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO tracking_updates (shipment_id, update_date, status, location)
+        VALUES (?, ?, ?, ?)
+    ''', (
+        data['shipment_id'],
+        data['update_date'],
+        data['status'],
+        data['location']
+    ))
+    conn.commit()  # 提交更改
+    cursor.close()
+    conn.close()
+    return jsonify({'message': '追踪更新创建成功'})  # 返回成功信息
+
+# 定义 API 端点来获取所有追踪更新
+@app.route('/tracking_updates', methods=['GET'])
+def get_tracking_updates():
+    conn = sqlite3.connect('logistics.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM tracking_updates')  # 查询所有追踪更新
+    tracking_updates = cursor.fetchall()  # 获取查询结果
+    cursor.close()
+    conn.close()
+    return jsonify([dict(tracking_update) for tracking_update in tracking_updates])  # 将结果转换为JSON格式并返回
+
+# 定义 API 端点来获取某个运输的所有追踪更新
+@app.route('/shipments/<int:id>/tracking_updates', methods=['GET'])
+def get_tracking_updates_for_shipment(id):
+    conn = sqlite3.connect('logistics.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM tracking_updates WHERE shipment_id = ?', (id,))  # 查询指定运输ID的所有追踪更新
+    tracking_updates = cursor.fetchall()  # 获取查询结果
+    cursor.close()
+    conn.close()
+    return jsonify([dict(tracking_update) for tracking_update in tracking_updates])  # 将结果转换为JSON格式并返回
+
+# 运行 Flask 应用
+if __name__ == '__main__':
+    app.run(debug=True)
