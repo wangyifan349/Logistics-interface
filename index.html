@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多功能API系统</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #337ab7;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .nav {
+            margin-bottom: 20px;
+        }
+        .nav li {
+            margin-right: 20px;
+        }
+        .nav li a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+        .nav li a:hover {
+            color: #23527c;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+        .section p {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>多功能API系统</h1>
+        </div>
+        <ul class="nav">
+            <li><a href="#parking">停车系统</a></li>
+            <li><a href="#cosmetics">化妆师品系统</a></li>
+            <li><a href="#canteen">食堂系统</a></li>
+        </ul>
+        <div class="section" id="parking">
+            <h2>停车系统</h2>
+            <p>停车系统API接口：</p>
+            <ul>
+                <li><a href="/parking/add">添加新的停车信息</a></li>
+                <li><a href="/parking/get">获取停车信息</a></li>
+                <li><a href="/parking/update">更新停车信息</a></li>
+                <li><a href="/parking/delete">删除停车信息</a></li>
+            </ul>
+        </div>
+        <div class="section" id="cosmetics">
+            <h2>化妆师品系统</h2>
+            <p>化妆师品系统API接口：</p>
+            <ul>
+                <li><a href="/cosmetics/add">添加新的化妆师品信息</a></li>
+                <li><a href="/cosmetics/get">获取化妆师品信息</a></li>
+                <li><a href="/cosmetics/update">更新化妆师品信息</a></li>
+                <li><a href="/cosmetics/delete">删除化妆师品信息</a></li>
+            </ul>
+        </div>
+        <div class="section" id="canteen">
+            <h2>食堂系统</h2>
+            <p>食堂系统API接口：</p>
+            <ul>
+                <li><a href="/canteen/add">添加新的食堂信息</a></li>
+                <li><a href="/canteen/get">获取食堂信息</a></li>
+                <li><a href="/canteen/update">更新食堂信息</a></li>
+                <li><a href="/canteen/delete">删除食堂信息</a></li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
